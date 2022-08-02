@@ -1,18 +1,19 @@
 [tool.poetry]
-name = "python-library"
+name = "django-app"
 version = "1.0.0"
-description = "Provide base template for python library"
+description = "Provide base template for django app package"
 authors = ["JaeyoungHeo <jay.jaeyoung@gmail.com>"]
 maintainers = ["JaeyoungHeo <jay.jaeyoung@gmail.com>"]
 readme = "README.md"
-repository = "https://github.com/8percent/python-library"
+repository = "https://github.com/8percent/django-app"
 license = "MIT"
 packages = [
-    { include = "python_library", from = "src" },
+    { include = "django_app", from = "src" },
 ]
 
 [tool.poetry.dependencies]
 python = ">=3.9 <3.11"
+django = "~3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
@@ -32,12 +33,18 @@ build-backend = "poetry.core.masonry.api"
 [tool.isort]
 force_single_line = "True"
 sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+skip_glob = ["*/migrations/*"]
 
 [tool.black]
 preview = "True"
 line-length = "79"
 target-version = ['py310']
 skip-string-normalization = "True"
+extend-exclude = '''
+(
+  migrations
+)
+'''
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

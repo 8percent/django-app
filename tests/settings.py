@@ -7,7 +7,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
-    'holiday.apps.HolidayConfig',
+    'django_app.apps.DjangoAppConfig',
 ]
 
 MIDDLEWARE = [
