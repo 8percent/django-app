@@ -1,50 +1,52 @@
-[tool.poetry]
+[project]
 name = "django-app"
 version = "1.0.0"
 description = "Provide base template for django app package"
-authors = ["JaeyoungHeo <jay.jaeyoung@gmail.com>"]
-maintainers = ["JaeyoungHeo <jay.jaeyoung@gmail.com>"]
+authors = [
+    { name = "JaeyoungHeo", email = "jay.jaeyoung@gmail.com" },
+]
+maintainers = [
+    { name = "JaeyoungHeo", email = "jay.jaeyoung@gmail.com" },
+]
 readme = "README.md"
-repository = "https://github.com/8percent/django-app"
-license = "MIT"
-packages = [
-    { include = "django_app", from = "src" },
+license = { text = "MIT" }
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.2,<5.3",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.9 <3.11"
-django = "~3.2"
+[project.urls]
+repository = "https://github.com/8percent/django-app"
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.1.2"
-isort = "^5.10.1"
-tox = "^3.25.1"
-flake8 = "^5.0.1"
-pytest-cov = "^3.0.0"
-black = "^22.6.0"
-pre-commit = "^2.19.0"
-pytest-django = "^4.5.2"
+[dependency-groups]
+dev = [
+    "pytest>=8.3,<9",
+    "tox>=4.15,<5",
+    "tox-uv>=1.11.0",
+    "pytest-cov>=5,<7",
+    "ruff>=0.9",
+    "pre-commit>=4,<5",
+    "pytest-django>=4.9,<5",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-# Lint Configurations
-[tool.isort]
-force_single_line = "True"
-sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
-skip_glob = ["*/migrations/*"]
+[tool.hatch.build.targets.wheel]
+packages = ["src/django_app"]
 
-[tool.black]
-preview = "True"
-line-length = "79"
-target-version = ['py310']
-skip-string-normalization = "True"
-extend-exclude = '''
-(
-  migrations
-)
-'''
+# Lint & Format Configurations (ruff, aligned with the `eight` conventions)
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+extend-exclude = ["*/migrations/*"]
+
+[tool.ruff.lint]
+# E/W: pycodestyle, F: pyflakes, I: isort
+select = ["E", "W", "F", "I"]
+# E203 conflicts with the formatter's slice handling (matches eight's flake8 config)
+extend-ignore = ["E203"]
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"
